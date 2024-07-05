@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Predictive Modeling for Detection of Type-2 Diabetes&colon; Evaluation of Three Machine Learning Algorithms</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="predictive-modeling-for-detection-of-type-2-diabetes-evaluation-of-three-machine-learning-algorithms">Predictive Modeling for Detection of Type-2 Diabetes: Evaluation of Three Machine Learning Algorithms</h1>
+<h2 id="cind-820-big-data-analytics-project">CIND 820: Big Data Analytics Project</h2>
+<h3 id="initial-result-and-codes">Initial Result and Codes</h3>
+<h3 id="yitayal-mengistu-501211839">Yitayal Mengistu [501211839]</h3>
+<h4 id="submitted-to">Submitted to:</h4>
+<h4 id="dr-ceni-babaoglu-supervisor">Dr. Ceni Babaoglu (supervisor)</h4>
+<h4 id="july-2-2024">July 2, 2024</h4>
+<h1 id="contents">Contents</h1>
+<ul>
+<li><a href="#predictive-modeling-for-detection-of-type-2-diabetes-evaluation-of-three-machine-learning-algorithms">Predictive Modeling for Detection of Type-2 Diabetes: Evaluation of Three Machine Learning Algorithms</a>
+<ul>
+<li><a href="#cind-820-big-data-analytics-project">CIND 820: Big Data Analytics Project</a>
+<ul>
+<li><a href="#initial-result-and-codes">Initial Result and Codes</a></li>
+<li><a href="#yitayal-mengistu-501211839">Yitayal Mengistu [501211839]</a>
+<ul>
+<li><a href="#submitted-to">Submitted to:</a></li>
+<li><a href="#dr-ceni-babaoglu-supervisor">Dr. Ceni Babaoglu (supervisor)</a></li>
+<li><a href="#july-2-2024">July 2, 2024</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#contents">Contents</a></li>
+<li><a href="#table-of-figures">Table of Figures</a>
+<ul>
+<li><a href="#initial-result-and-codes-1">Initial Result and Codes</a>
+<ul>
+<li><a href="#data-preprocessing-and-transformation">Data Preprocessing and Transformation</a></li>
+<li><a href="#data-normalization-and-scaling">Data Normalization and Scaling</a></li>
+</ul>
+</li>
+<li><a href="#12data-transformation-log-transformation">1.2.Data Transformation-Log Transformation</a></li>
+<li><a href="#13handling-categorical-data-label-encoding-and-one-hot-encoding">1.3.	Handling Categorical Data: Label Encoding and One-Hot Encoding</a></li>
+<li><a href="#2exploratory-data-analysis-eda">2.Exploratory Data Analysis (EDA)</a></li>
+</ul>
+</li>
+<li><a href="#3experimental-design">3.Experimental Design</a>
+<ul>
+<li><a href="#31feature-selection-and-cross-validation-on-the-training-dataset">3.1.Feature Selection and Cross Validation on the Training Dataset</a></li>
+<li><a href="#32-univariate-testing-for-classification">3.2. Univariate Testing for Classification</a></li>
+<li><a href="#33recursive-feature-elimination-with-cross-validation-rfecv">3.3.Recursive Feature Elimination with Cross-Validation (RFECV)</a></li>
+<li><a href="#34-5-fold-cross-validation">3.4. 5-Fold Cross Validation</a></li>
+<li><a href="#35optimization-of-key-model-parameters">3.5.Optimization of Key Model Parameters</a>
+<ul>
+<li><a href="#optimization-of-key-parameters---logistic-regression">Optimization of Key Parameters - Logistic Regression</a></li>
+<li><a href="#optimization-of-key-parameters---decision-tree">Optimization of Key Parameters - Decision Tree</a></li>
+<li><a href="#optimization-of-key-parameters---random-forests">Optimization of Key Parameters - Random Forests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#4modelling-classification-algorithms-logical-and-theoretical-farmwork">4.Modelling Classification Algorithms: Logical and Theoretical Farmwork</a>
+<ul>
+<li><a href="#41logistic-regression-for-classification">4.1.	Logistic Regression for Classification</a></li>
+<li><a href="#42decision-tree-for-classification">4.2.Decision Tree for Classification</a></li>
+<li><a href="#43random-forests-for-classification">4.3.Random Forests for Classification</a></li>
+<li><a href="#44consequences-of-diabetes-prediction-errors-type-i-and-type-ii-errors">4.4.Consequences of Diabetes Prediction Errors: Type-I and Type-II Errors</a></li>
+<li><a href="#45evaluation-metrices">4.5.Evaluation Metrices</a></li>
+</ul>
+</li>
+<li><a href="#5results-and-discussion">5.Results and Discussion</a>
+<ul>
+<li><a href="#51comparative-analysis-of-model-performances">5.1.Comparative Analysis of Model Performances</a>
+<ul>
+<li><a href="#511-logistic-regression-performance">5.1.1. Logistic Regression Performance</a></li>
+<li><a href="#512-decision-tree-performance">5.1.2. Decision Tree Performance</a></li>
+<li><a href="#513-random-forest-performance">5.1.3. Random Forest Performance</a></li>
+</ul>
+</li>
+<li><a href="#52impact-of-feature-selection-and-cross-validation-on-model-performance">5.2.Impact of Feature Selection and Cross-Validation on Model Performance</a></li>
+<li><a href="#53impact-of-hyperparameter-optimization-on-model-performance">5.3.Impact of Hyperparameter Optimization on Model Performance</a></li>
+<li><a href="#54most-predictive-features-for-diabetes-risk-prediction">5.4.Most Predictive Features for Diabetes Risk prediction</a></li>
+</ul>
+</li>
+<li><a href="#6-conclusion-and-policy-implications">6. Conclusion and Policy Implications</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<p><a href="#references">References</a> (Page 31)<br>
+<a href="#appendix">Appendix</a> (Page 34)</p>
+<h1 id="table-of-figures">Table of Figures</h1>
+<ul>
+<li>FIGURE 1 - HISTOGRAM-BMI BEFORE LOG TRANSFORMATION (Page 4)</li>
+<li>FIGURE 2 - HISTOGRAM-BMI AFTER LOG TRANSFORMATION (Page 4)</li>
+<li>FIGURE 3 - BMI BOX PLOT TO DETECT OUTLIERS (Page 4)</li>
+<li>FIGURE 4 - BMI BOX PLOT AFTER DROPPING OUTLIERS (Page 5)</li>
+<li>FIGURE 5 - LOGISTIC REGRESSION FEATURE SELECTION USING FEATURE COEFFICIENTS (Page 9)</li>
+<li>FIGURE 6 - LOGISTIC REGRESSION FEATURE SELECTION USING RFECV (Page 9)</li>
+<li>FIGURE 7 - DECISION TREE FEATURE SELECTION USING RFECV (Page 9)</li>
+<li>FIGURE 8 - DECISION TREE FEATURE SELECTION USING GINI IMPURITY (Page 10)</li>
+<li>FIGURE 9 - RANDOM FOREST FEATURE SELECTION USING GINI IMPURITY (Page 10)</li>
+<li>FIGURE 10 - RANDOM FOREST FEATURE SELECTION USING RFECV (Page 11)</li>
+</ul>
+<h2 id="initial-result-and-codes-1">Initial Result and Codes</h2>
+<h3 id="data-preprocessing-and-transformation">Data Preprocessing and Transformation</h3>
+<p>Visualizing a numeric feature through a histogram or density plot offers valuable insights into its distribution and characteristics, aiding in the determination of whether normalization or transformation is necessary. The relevance and techniques of normalization and transformation are discussed as follows.</p>
+<h3 id="data-normalization-and-scaling">Data Normalization and Scaling</h3>
+<p>To ensure that the features contributes proportionately or no single feature dominate the learning process of the model due to it scale, transforming the features in a dataset to a common scale without distorting differences in the ranges of values is important. This process prevents features with larger ranges from disproportionately influencing the model. This data preprocessing step is called data normalization(Izenman, 2008)
+Data normalization techniques that involve mathematical transformations are applied to numeric features, mainly using mini-max scaling or z-score standardization (standard scaling) (Izenman, 2008). Normalization techniques are not directly applied on categorical data. If necessary, we use label encoding or One-Hot encoding on categorical data before applying normalization. The methods or approaches and implementation procedures for encoding of Categorical data are discussed under the sections “label encoding” and “One-Hot encoding” below.
+In this dataset, only bmi (body mass index) is normalized using the standard mini-max scaling technique. The Mini-Max scaling is used to normalize or rescale the range of features to a fixed rage, typically between 0 and 1 or between -1 and 1 depending on the characteristics of the data and requirements of the machine learning algorithm. With regard to the characteristics of the data, if the data is strictly non-negative, scaling to [0, 1] keeps the values within a non-negative range.
+Second Machine learning algorithms that rely on gradient descent optimization, such as logistic regression perform better or converge faster when the input features are normalized to the [0, 1] range. In this particular case, the standard formula for Mini-Maz normalization is(Brownlee, 2020; Giuseppe et al., n.d.).</p>
+<p><img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-1.png" alt="alt text"></p>
+<p>Where:
+X is the orginal value of the feature
+X_min  is the minimum value of the feature
+X_(max )  is the maximum value of the feature and
+X_scaled  is the scaled value of X</p>
+<p>On contrary, some Machine learning algorithms that are sensitive to the symmetry of the input data, such as support vector machines (when using kernels like RBF) and principal component analysis perform better when the mean of the data is around zero. Scaling the data to [-1,1] helps center the data around zero. To scale data to [-1, 1], we can modify the standard formula for Mini-Maz normalization shown above (Brownlee, 2020):</p>
+<p><img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image.png" alt="alt text"></p>
+<h2 id="12data-transformation-log-transformation">1.2.Data Transformation-Log Transformation</h2>
+<p>The choice of data transformation techniques, such as log transformation, reciprocal transformation or polynomial transformation of numeric variables is an important preprocessing step in many machine learning and statistical modeling tasks for several purposes(Kuhn &amp; Johnson, 2019).
+According to  (Kuhn &amp; Johnson, 2019; Sharma, 2022;)log transformation may be used to normalize skewed data for models that assume normal distribution and to reduce the variance of data; to handles outliers by compressing the range of data for features with extreme values; to linearize the relationship between features and the target variable; to improve model performance by addressing issues related to skewed data,  and non-linearity; and to improve interpretability and get more intuitive insights, especially when dealing with multiplicative processes. For instance, the log-transformed data might help in understanding proportional changes rather than absolute changes.
+The general formula for the popular log transformation technique utilized to stabilize the variance, make the data more normally distributed, and reduce the effect of outliers is given as follows:
+<img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-2.png" alt="alt text"></p>
+<p>The following two histograms show the distribution of bmi (body mass index before and after log transformation. After log transformation, the distribution looks closer to normal. The next two box plots also indicate the detection and removal of outliers on the same feature, BMI.</p>
+<p><img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-3.png" alt="alt text">
+<img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-4.png" alt="alt text">
+<img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-5.png" alt="alt text">
+<img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-6.png" alt="alt text"></p>
+<h2 id="13handling-categorical-data-label-encoding-and-one-hot-encoding">1.3.	Handling Categorical Data: Label Encoding and One-Hot Encoding</h2>
+<p>Since Machine Learning Algorithms are based on mathematical operations that require numerical input and often assume that the input feature has an inherent order or meaningful distance between values, they do not handle categorical data directly. Using raw categorical data may lead to misleading interpretations and poor model performance(Roy, 2019) . To efficiently utilize categorical data in machine learning algorithms, it is crucial to transform the data into a suitable numeric format using techniques like label encoding, one-hot encoding, binary encoding or frequency encoding(Bobbitt, 2022; Roy, 2019). These transformations ensure the categorical data is represented in a way that the algorithms can process without introducing misleading relationships.
+For this project, however only one-hot encoding scenario is applied to run the ML algorithms turn see the impacts on the performance of the algorithms because label encoding implicitly assumes an ordinal relationship between categories, which may not be true for nominal categories. Another advantage to One-Hot encoding is that it is easier to interpret the encoded data, as each category is represented explicitly (Roy, 2019). Most of the features in this project have binary data in numerical format and don’t require one-hot encoding or normalization. See the comparison on “results and discussion” section.</p>
+<h2 id="2exploratory-data-analysis-eda">2.Exploratory Data Analysis (EDA)</h2>
+<p>To gain comprehensive insights into the dataset, an exploratory data analysis (EDA) has been conducted in this dataset. EDA mainly undertaken to understand the distribution of the dataset, identify outliers, explore relationships between variables, and test hypotheses. Key components included employing descriptive statistics to summarize data, utilizing various visualizations such as histograms, box plots, scatter plots, and heatmaps to visualize data distributions and relationships. Additionally, we assessed relationships between variables using correlation coefficients and scatter plots, complemented by creating summary tables to highlight the dataset's main characteristics. These efforts collectively ensured a thorough understanding of the dataset and informed strategic decisions for the feature selection, analysis and modeling phases. Some selected exploratory data analysis visualizations are found under Appendix-A.</p>
+<h1 id="3experimental-design">3.Experimental Design</h1>
+<h2 id="31feature-selection-and-cross-validation-on-the-training-dataset">3.1.Feature Selection and Cross Validation on the Training Dataset</h2>
+<p>More effective and reliable predictive models can be built by selecting the most relevant features from a comprehensive list of potential features in our dataset. This selection process is crucial for enhancing model performance, reducing overfitting, improving interpretability, and increasing efficiency(Kuhn &amp; Johnson, 2019).
+In this project, after splitting the dataset into training and testing sets, feature selection was performed on the training set alone to maintain the independence of the testing set and ensure unbiased model evaluation. This precaution avoids overly optimistic performance estimates and ensures the model generalizes well to new, unseen data, reflecting real-world scenarios where the model encounters previously unseen data points.
+The feature selection, cross-validation, and performance testing of the three classification models were conducted as follows to ensure robust feature selection and model evaluation, leading to the development of reliable and generalizable predictive models.</p>
+<ol>
+<li>Data Splitting: The dataset was divided into 80:20 training and testing sets using the train-test split method.
+•Feature Selection: Feature selection was performed on the training set alone using two techniques: measure of Gini impurity filtering by importance and recursive feature elimination with cross-validation (RFECV).</li>
+<li>Cross-Validation: 5-fold cross-validation was applied to the training dataset. This involved:
+• Splitting the training data into k = 5 subsets (folds).
+• Using k-1 = 4 folds for training and the remaining 1-fold for validation.
+• Repeating this process 5 times, with each fold used once as a validation set.
+• Calculating average performance metrics (such as accuracy, precision, recall) across all 5 folds to obtain a reliable estimate of model performance on unseen data.</li>
+<li>Model Evaluation: After completing cross-validation on the training dataset, the final performance of the three models (Logistic Regression, Decision Tree, and Random Forest) was evaluated on the independent testing dataset that was originally set aside. This provided an unbiased estimate of how well the models generalize to new, unseen data.</li>
+</ol>
+<h2 id="32-univariate-testing-for-classification">3.2. Univariate Testing for Classification</h2>
+<p>A chi-square test for categorical features and ANOVA test for numerical features used to identify features that show a strong statistical relationship with the target variable. This step helped quickly filter out obviously irrelevant features based on their individual merit. However, utilizing and comparing additional feature selection techniques was necessary to confirm suitability, especially for decision tree and random forest due to the inherent ability of these two algorithms to handle feature interactions and non-linear relationships without relying heavily on pre-filtering.</p>
+<h2 id="33recursive-feature-elimination-with-cross-validation-rfecv">3.3.Recursive Feature Elimination with Cross-Validation (RFECV)</h2>
+<p>The RFECV method, which integrates feature elimination with cross-validation, is used to iteratively remove less important features and evaluates model performance through cross-validation. Due to the inherent capability of Decision Trees and Random Forests to handle feature interactions and non-linear relationships, RFECV was first assumed to help identify the optimal subset of features that collectively contribute most to model accuracy. However, RFECV resulted in very restrictive feature selection for both Decision Trees and Random Forests, only 4 features for Decision Trees and 5 features for Random Forests were selected. For logistic regression, it selected 14 features.
+This led us to choose another feature selection alternative, feature Selection using gini importance for Decision Trees and Random Forests and Feature Selection using Model coefficients and p-values for Logistic Regression. The following figures show feature selection results for logistic regression, decision trees and random forest models using RFECV and feature importance selection criteria.</p>
+<p><img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-7.png" alt="alt text">
+<img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-8.png" alt="alt text">
+<img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-9.png" alt="alt text">
+<img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-10.png" alt="alt text">
+<img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-11.png" alt="alt text">
+<img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-12.png" alt="alt text"></p>
+<h2 id="34-5-fold-cross-validation">3.4. 5-Fold Cross Validation</h2>
+<p>Train-Test Split and K-fold Cross-Validation are both techniques used for evaluating machine learning models. Unlike simple train-test splitting, k-fold cross-validation aims to mitigate biases in performance estimation by averaging results across multiple data splits. This method is preferred for its ability to provide a more accurate gauge of model performance, making it suitable for model evaluation, selection, and assessing generalizability. Additionally, it helps gauge model stability through comparisons of scores across the 5 folds used(Sohil et al., 2022).</p>
+<p>In this project, a 5-fold cross-validation technique was utilized on the training dataset to assess the performance of three machine learning models: Logistic Regression, Decision Tree, and Random Forest. First, the dataset is divided in to 5 folds or subsets of about equal size, the cross-validation process is repeated 5 times and, in each iteration, one of the 5 subset is used as the validation set, and the remaining 4(k-1) subsets are used as a training set. This means for each iteration the model is trained on the training set and evaluated on the validation set which results in k=5 performance metrices (accuracy, F1-score) one for each fold. Finally, the k=5 performance metrices are averaged to obtain a single estimation of model’s performance for each algorithm. This average performance metrics is often considered a more reliable estimate of the model’s performance compared to using a single train test split.</p>
+<h2 id="35optimization-of-key-model-parameters">3.5.Optimization of Key Model Parameters</h2>
+<p>Parameter tuning and optimization techniques are critical steps in improving the performance of classification algorithms. Key parameters can be adjusted and alternative optimization techniques can be used to fine tune the performance of the models based on the available dataset and problem under consideration. To find the optimal combination of parameters for the three-classifier considered in this project, GridSearch with cross validation technique was used.</p>
+<p>Given the large working dataset in this project, predicting outcomes from a large, complex dataset with numerous features and data points significantly impacts training time and convergence. Accordingly, top 3 parameters with different ranges of values for each classification algorithms are selected for comparative analysis of model performance. The optimized values are given in table 1 below.</p>
+<h3 id="optimization-of-key-parameters---logistic-regression">Optimization of Key Parameters - Logistic Regression</h3>
+<p>The top 3 parameters selected for fine tuning the Logistic regression model performance is regularization strength, regularization penalty (penalty) and solver. To determine the optimal values for regularization strength, penalty, and solver for the Logistic Regression model, a technique called Grid Search with Cross-Validation (GridSearchCV) was used (Géron, 2019). This method exhaustively searches through a specified parameter grid to find the best combination of parameter values based on cross-validation performance. Using GridSearchCV, the performance of the Logistic Regression model with different combinations of Regularization strength (C), penalty, and solver values can be systematically evaluated to determine the optimal accuracy of the model (Géron, 2019). The typical ranges of three most important parameters in logistic regression areas follows:
+Regularization strength prevent overfitting by adding a penalty for larger coefficients in the model. Regularization Strength (C in Logistic Regression) controls the inverse of regularization strength. A smaller C value indicates stronger regularization. The most commonly used values are: [0.01, 0.1, 1, 10, 100].</p>
+<p>Regularization penalty specifies the type of regularization to be applied. Common options are l1 (Lasso) for promoting sparsity, l2 (Ridge) for promoting smaller coefficients, and 'elasticnet' which is a combination of both. The most commonly used options are: [l1, l2, elasticnet, none].
+The solver parameter specifies the optimization algorithm used to fit the model. The choice of solver can significantly impact the convergence speed, accuracy, and overall performance of the model, particularly for large datasets or datasets with specific characteristics(Géron, 2019). Not all solvers support all penalties and solvers in this context refers to algorithm to use in the optimization problem. Common solvers include: liblinear, lbfgs, newton-cg, sag, saga(Géron, 2019).</p>
+<h3 id="optimization-of-key-parameters---decision-tree">Optimization of Key Parameters - Decision Tree</h3>
+<p>To fine-tune the performance of a decision tree model for classification purpose, the three most important parameters considered in this analysis include: maximum depth which controls the maximum depth of the tree to prevent overfitting; minimum samples split to specify the minimum number of samples required to split an internal node, controlling tree size and preventing overfitting and  minimum samples leaf  to set the minimum number of samples that must be present in a leaf node, avoiding leaves based on very few samples and improving robustness. These parameters are crucial for managing the complexity of the decision tree and achieving a good balance between bias and variance, leading to better performance on both training and test datasets(Géron, 2019).</p>
+<p>To find the optimal combination of three most relevant hyperparameters for a Decision Tree classifier, GridSearchCV was used in a similar manner to the Logistic Regression.  For a Decision Tree, the typical ranges for these hyperparameters used in python code are given as follows:</p>
+<ul>
+<li>
+<p>Values for max_depth: [None, 10, 20, 30, 40, 50]</p>
+</li>
+<li>
+<p>Values for min_samples_split: [2, 5, 10, 20]</p>
+</li>
+<li>
+<p>Values for min_samples_leaf: [1, 2, 5, 10]</p>
+</li>
+</ul>
+<h3 id="optimization-of-key-parameters---random-forests">Optimization of Key Parameters - Random Forests</h3>
+<p>Similarly, to fine-tune the performance of random forests model for classification purpose, three most important parameters considered in this analysis include the number of estimators, maximum features, and maximum depth.  The number of estimators parameter is used to specify the number of trees in the forest. In relation to this, more trees generally lead to better performance but at a higher computational cost. The max features parameter is used to control the number of features considered for each split. Adjusting this parameter helps reduce overfitting and introduces randomness, improving model generalization. The max depth parameter is used to limit the maximum depth of each tree, preventing overfitting and controlling the complexity of the model(Raschka &amp; Mirjalili, 2019) . These parameters are crucial for managing the complexity and diversity of the trees in the Random Forest, which in turn helps in achieving better performance on both training and test datasets. Below are some key parameters for the three models along with their default values and optimized values using GridSearchCV method.</p>
+<p><img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-13.png" alt="alt text"></p>
+<p>To optimize the values of these parameters of the Random Forest, GridSearchCV is used in a similar manner as the LR and DT models above. For Random Forests, the typical ranges for these hyperparameters used in python code are as follows(Raschka &amp; Mirjalili, 2019).</p>
+<ul>
+<li>n_estimators: [50, 100, 200, 300]</li>
+<li>max_features: [sqrt, log2, None]
+•	max_depth: [None, 10, 20, 30, 40, 50]</li>
+</ul>
+<h1 id="4modelling-classification-algorithms-logical-and-theoretical-farmwork">4.Modelling Classification Algorithms: Logical and Theoretical Farmwork</h1>
+<h2 id="41logistic-regression-for-classification">4.1.	Logistic Regression for Classification</h2>
+<p>logistic regression is a robust algorithm for binary classification due to its simplicity, interpretability, and efficacy in handling linearly separable datasets(Fullerton, 2009). By optimizing coefficients and employing regularization, logistic regression provides reliable predictions while offering insights into underlying data relationships(Fullerton, 2009).
+logistic regression estimates the probability of an instance belonging to a specific class (Y=1) using the sigmoid function, transforming a linear combination of inputs to a value between 0 and 1. The algorithm classifies an instance as Y=1 if the predicted probability p(x) is 0.5 or higher; otherwise, it predicts Y=0. The decision boundary is determined where the linear combination of input features equals zero, separating predictions of Y=1 and Y=0(Train, 2001).
+Logistic regression computes a weighted sum of input features, transformed by the logistic function to generate a probability score between 0 and 1, representing the likelihood of an instance belonging to the positive class. During training, coefficients are optimized to maximize the likelihood of observed data, typically using techniques like gradient descent to iteratively adjust coefficients and minimize the logistic loss function. For predictions, new instances are evaluated based on probability scores derived from learned coefficients, with a threshold (often 0.5) determining classification into the positive or negative class(Ilyas et al., 2020).</p>
+<h2 id="42decision-tree-for-classification">4.2.Decision Tree for Classification</h2>
+<p>A decision tree is a versatile machine learning algorithm used for both classification and regression tasks. In classification, it segments the data into subsets based on feature values, forming a tree-like structure of decisions. Decision trees operate by recursively splitting the data based on feature values to create homogeneous subsets. The aim is to develop a model that predicts the target variable by learning simple decision rules derived from the data features(Fullerton, 2009; Gong, 2022).
+The process of building a decision tree involves several key steps. The algorithm begins with the entire dataset as the root node. At each node, the impurity measure (such as Gini impurity or entropy) is calculated for each feature. The feature that provides the highest information gain or lowest impurity after the split is selected. The data is then divided into subsets based on this feature. This process is repeated recursively for each subset, creating new decision nodes and further splits until a stopping criterion is met. These criteria can include reaching a maximum tree depth, having a minimum number of samples per leaf, or achieving complete purity in the subsets (all instances in a node belong to the same class)(Aghaei et al., 2021; Hohman et al., 2020).</p>
+<p>During prediction, a new instance is classified by passing it down the tree starting from the root node. At each decision node, the algorithm follows the branch that corresponds to the feature value of the instance. This continues until a leaf node is reached, and the class label of that leaf node is assigned to the instance(Gong, 2022).
+The accuracy and efficiency of a decision tree are heavily influenced by the choice of impurity measures and the method of splitting(Aghaei et al., 2021). Gini impurity measures the likelihood of an incorrect classification of a randomly chosen element, while entropy measures the level of disorder or impurity. Information gain, which guides feature selection at each split, is calculated by comparing the entropy or Gini impurity of the dataset before and after the split (Aghaei et al., 2021; Breiman, 2001a).
+To avoid overfitting, which can result from an overly complex tree, pruning techniques are employed. Pre-pruning, or early stopping, halts the tree's growth once it reaches a predefined level of complexity. Post-pruning involves removing branches from a fully grown tree to reduce complexity and enhance generalization to unseen data. These techniques ensure the model remains robust and performs well on new, unseen data (Aghaei et al., 2021; Bierman, 2001a).</p>
+<h2 id="43random-forests-for-classification">4.3.Random Forests for Classification</h2>
+<p>A random forest is a powerful ensemble machine learning algorithm used for both classification and regression tasks. In classification, it constructs a multitude of decision trees during training and outputs the class that is the mode of the classes of the individual trees. Random forests operate by creating multiple decision trees from various subsets of the data, thereby reducing the risk of overfitting and improving the model’s accuracy (Breiman, 2001b).
+The process of building a random forest involves several key steps. First, the algorithm begins by generating numerous bootstrap samples from the original dataset. Each bootstrap sample is used to build an individual decision tree. During the construction of each tree, a random subset of features is selected at each split, ensuring that each tree is different from the others. This randomness helps in making the model robust and less prone to overfitting. The trees are grown to their maximum depth without pruning.(Breiman, 2001b; Gong, 2022).</p>
+<p>During prediction, a new instance is classified by passing it through all the trees in the forest. Each tree provides a class prediction, and the final output is determined by the majority vote among the trees. This ensemble approach ensures that the model benefits from the wisdom of the crowd, leading to more accurate and stable predictions(Breiman, 2001b).
+The accuracy and robustness of a random forest are influenced by several factors, such as the number of trees in the forest and the number of features considered for splitting at each node. Increasing the number of trees generally improves the model’s performance but also increases computational complexity. Random forests typically use the Gini impurity or entropy measures to evaluate splits, similar to individual decision trees(Breiman, 2001b; Gong, 2022).
+To further enhance the model’s performance, hyperparameter tuning can be employed. Key parameters to tune include the number of trees (n_estimators), the maximum depth of each tree (max_depth), the minimum number of samples required to split an internal node (min_samples_split), and the minimum number of samples required to be at a leaf node (min_samples_leaf). Proper tuning of these parameters helps in balancing the model’s bias and variance, leading to optimal performance on new, unseen data(Breiman, 2001b; Gong, 2022).</p>
+<p>Random forests are widely appreciated for their ability to handle large datasets with higher dimensionality and for their robustness against overfitting. They form the backbone of many advanced machine learning applications and serve as a benchmark for comparing the performance of other algorithms(Cichosz et al., 2016; Rani, 2020).</p>
+<h2 id="44consequences-of-diabetes-prediction-errors-type-i-and-type-ii-errors">4.4.Consequences of Diabetes Prediction Errors: Type-I and Type-II Errors</h2>
+<p>In medical testing, understanding and managing type I and type II errors is crucial, particularly for conditions like diabetes. A type I error, also known as a false positive, occurs when a model or a test incorrectly predicts the presence of a condition that is not actually present. In the context of diabetes, this means diagnosing a patient with diabetes when they do not have it. This can lead to unnecessary stress, anxiety, and potentially harmful treatments. On the other hand, a Type II error, or false negative, happens when a model or test fails to predict the presence of a condition that is actually present. For diabetes, this means failing to diagnose a patient who actually has the disease. This can result in a lack of necessary treatment, leading to serious health complications(Fawcett, 2006; Provost et al., 2001).</p>
+<p>The relative importance of Type I and Type II errors varies by condition. Type II errors are generally more critical for conditions where early diagnosis and treatment are crucial for preventing severe outcomes or further transmission, such as cancer, diabetes, and HIV. Missing these conditions can lead to significant health deterioration or public health risks. On the other hand, Type I errors are more critical in scenarios where diagnostic tests can cause significant anxiety, invasive follow-up procedures, and unnecessary treatments. Examples include certain cancer screenings and prenatal testing. While Type I errors can cause harm, they often do not carry the same immediate health risks as Type II errors(Fawcett, 2006; McHugh, 2009; Provost et al., 2001).
+In this evaluation of model predictions, minimizing type-II error (false negatives) is prioritized, where early diagnosis and treatment are crucial to avoid serious health complications from diabetes. However, minimizing false positives is also important to avoid unnecessary stress, anxiety, and unnecessary treatments.</p>
+<p>In the above context, recall is the most relevant metric to directly address type II errors by showing how well the model identify all positive instances. Recall measures the proportion of actual positives that are correctly identified by the model. While accuracy measures the overall correctness of the model by considering both true positives and true negatives, Precision and Specificity are the most relevant metrics for evaluating Type I errors. Precision focuses on the correctness of positive predictions and indicates how many of the positive predictions are actually correct and Specificity focuses on the correctness of negative predictions and indicates how well the model avoids false positives. The definition and description of different evaluation metrices rea given in the following section. These metrices provide a comprehensive understanding of a model’s performance.</p>
+<h2 id="45evaluation-metrices">4.5.Evaluation Metrices</h2>
+<p>Below are the most commonly used classification model performance evaluation matrices(Powers, 2007).</p>
+<p><strong>a)Accuracy:</strong> The proportion of correctly classified instances out of the total instances. It is calculated as:</p>
+<p><img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-14.png" alt="alt text"></p>
+<p><strong>b) Precision:</strong> The proportion of true positive predictions (correctly predicted positives) out of all positive predictions. It is calculated as:
+<img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-16.png" alt="alt text"></p>
+<p><strong>c)Recall (Sensitivity):</strong> The proportion of true positive predictions out of all actual positive instances. It is calculated as:</p>
+<p><img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-17.png" alt="alt text"></p>
+<p><strong>d) F1 Score:</strong> The harmonic means of precision and recall, providing a single metric that balances both measures. It is calculated as:
+<img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-18.png" alt="alt text"></p>
+<p><strong>e)Specificity:</strong> The proportion of true negative predictions (correctly predicted negatives) out of all actual negative instances. It is calculated as:</p>
+<p><img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-19.png" alt="alt text"></p>
+<p><strong>f)Receiver Operating Characteristic (ROC Curve):</strong> A graphical representation of the trade-off between true positive rate (Sensitivity) and false positive rate (1 - Specificity) across various threshold values. AUC (Area Under the Curve) is often used to summarize the ROC curve.</p>
+<p><strong>g)Confusion Matrix:</strong> A table that summarizes the performance of a classification model, showing the counts of true positives, true negatives, false positives, and false negatives.</p>
+<p><strong>h)Precision-Recall Curve:</strong> A curve that shows the trade-off between precision and recall across various threshold values.</p>
+<h1 id="5results-and-discussion">5.Results and Discussion</h1>
+<p>In this project, we aimed to model the risk of type 2 diabetes using three machine learning algorithms: Logistic Regression (LR), Decision Tree (DT), and Random Forest (RF). Each model was evaluated under three scenarios: the base model, feature selection with 5-fold cross-validation, and hyperparameter optimization. The performance of these model scenarios was evaluated using four key metrics: accuracy, precision, recall, and F1 score. The comparative analysis of these models under different scenarios provides insights into their predictive capabilities and the impact of feature selection and hyperparameter tuning on model performance. Table 2 shows the results of Evaluation Metrics for Three classification Algorithms in Three Different Scenarios.</p>
+<h2 id="51comparative-analysis-of-model-performances">5.1.Comparative Analysis of Model Performances</h2>
+<h3 id="511-logistic-regression-performance">5.1.1. Logistic Regression Performance</h3>
+<p>The logistic regression (LR) model consistently demonstrated robust performance across all scenarios. The base model exhibited strong predictive capability, achieving an accuracy of 74.04 percent and an F1 score of 74.77. When feature selection was applied, the model maintained its performance, indicating a better balance in predicting positive cases. Hyperparameter optimization further didn’t refined the model, further achieving only marginal increases in recall and F1 score, thus enhancing its overall predictive performance. This consistency across scenarios highlights the robustness of the logistic regression model in predicting type 2 diabetes risk.</p>
+<h3 id="512-decision-tree-performance">5.1.2. Decision Tree Performance</h3>
+<p>The decision tree (DT) model, in contrast, showed varied performance across different scenarios. The base model performed poorly with an accuracy of 0.6368 and an F1 score of 62.44 percent, indicating limitations in its default configuration. Feature selection did not significantly improve the model's performance, with accuracy remaining around 64.12 percent. However, hyperparameter optimization led to substantial improvements, boosting accuracy to 72.55 percent and F1 score to 73.53 percent. These results suggest that while a decision tree model can be effective, it requires careful tuning of hyperparameters to achieve optimal performance.</p>
+<h3 id="513-random-forest-performance">5.1.3. Random Forest Performance</h3>
+<p>The random forest (RF) model displayed strong performance initially, with the base model achieving an accuracy of 73.85 percent and an F1 score of 75.04 percent. Interestingly, feature selection slightly decreased the model's performance, suggesting that the default feature set was already well-suited for the task. However, hyperparameter optimization enhanced the model, achieving an accuracy of 73.66 percent and an F1 score of 74.99 percent.</p>
+<h2 id="52impact-of-feature-selection-and-cross-validation-on-model-performance">5.2.Impact of Feature Selection and Cross-Validation on Model Performance</h2>
+<p>Feature selection had a varied impact on the models. For logistic regression, it resulted in marginal improvements, indicating that the initial feature set was already informative. For the decision tree and random forest models, feature selection had minimal impact, with some performance metrics even declining. This suggests that these models may inherently manage feature relevance effectively. Cross-validation, on the other hand, proved essential in providing a more robust evaluation of model performance, preventing overfitting and ensuring generalizability.</p>
+<h2 id="53impact-of-hyperparameter-optimization-on-model-performance">5.3.Impact of Hyperparameter Optimization on Model Performance</h2>
+<p>Hyperparameter optimization played a critical role in enhancing model performance, particularly for the decision tree and random forest models. Logistic regression showed consistent performance across all scenarios, indicating its inherent robustness and lesser dependency on hyperparameter tuning. For the decision tree and random forest models, hyperparameter optimization led to significant performance improvements, underscoring the importance of tuning to achieve optimal model configurations.
+Overall, logistic regression and random forest outperformed the decision tree model in all scenarios. The random forest model, particularly with hyperparameter optimization, demonstrated the best balance between precision and recall, making it the most reliable model for predicting type 2 diabetes risk. While the decision tree model's performance improved significantly with hyperparameter tuning, it remained less reliable compared to logistic regression and random forest. These findings highlight the importance of hyperparameter optimization and cross-validation in enhancing model performance and ensuring reliable predictions.
+<img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-20.png" alt="alt text"></p>
+<p>In conclusion, the comparative analysis underscores the significance of model selection, feature engineering, and hyperparameter tuning in predictive modeling. While logistic regression and random forest models showed robust performance, the decision tree model required extensive tuning to achieve comparable results. For predicting type 2 diabetes risk, the random forest with hyperparameter optimization is recommended for its superior balance of precision and recall, providing the most reliable predictions among the evaluated models.</p>
+<h2 id="54most-predictive-features-for-diabetes-risk-prediction">5.4.Most Predictive Features for Diabetes Risk prediction</h2>
+<p>The results of feature selection using feature importance indicate that most features in this dataset contribute to model accuracy, although the magnitude of their contribution varies significantly. For example, as shown in the figures below, bmi (body mass index) alone contributes about 26 percent to the overall performance for decision tree and random forest models.</p>
+<p><img src="file:///c:\Users\yitay\Documents\CIND820\diabetes_prediction\initial_results_and_codes\image-22.png" alt="alt text"></p>
+<p>Additionally, the top five features: bmi, bp, age, income, and chol(cholesterol), collectively account for approximately 53 percent of the model's performance. Feature selection based on Gini impurity for decision tree and random forest models indicated that the top three predictors of diabetes risk are BMI, BP, and age, which together contribute about 43 percent of the prediction accuracy.</p>
+<p>For logistic regression, important features were selected based on the absolute values of the coefficients and their significance level, with p-values less than or equal to 0.05. The coefficients for bmi and cholcheck were the most significant, with absolute values greater than 1. Specifically, bmi has a coefficient of 3.44, and cholcheck has a coefficient of 1.35. The top five relevant features for logistic regression include bmi, cholcheck, alcohol consumption, general health (genhlth), and high blood pressure(bp).</p>
+<h1 id="6-conclusion-and-policy-implications">6. Conclusion and Policy Implications</h1>
+<p>The comparative analysis of the logistic regression (LR), decision tree (DT), and random forest (RF) models provide valuable insights into their performance in predicting the risk of type 2 diabetes. The key findings and policy implications are the following:
+The random forest model, particularly with hyperparameter optimization, demonstrated the best balance between precision and recall, making it the most reliable model for predicting type 2 diabetes risk. Although logistic regression showed robust performance, the random forest's superior predictive capabilities make it the preferred choice. The decision tree model, while improved with hyperparameter tuning, remained less reliable compared to logistic regression and random forest.
+Feature selection had a varied impact on the models, with logistic regression showing marginal improvements and decision tree and random forest models showing minimal impact  in performance. Cross-validation proved essential in providing a more robust evaluation of model performance, preventing overfitting and ensuring generalizability. Implementing rigorous cross-validation procedures should be a standard practice in health predictive modeling to ensure that models generalize well to new data, thereby increasing their reliability and effectiveness in real-world applications.
+Hyperparameter optimization played a critical role in enhancing model performance, particularly for the decision tree and random forest models. Logistic regression showed consistent performance across all scenarios, indicating its inherent robustness and lesser dependency on hyperparameter tuning. Allocating resources towards the optimization of machine learning models, including hyperparameter tuning, can significantly improve the accuracy and reliability of predictive analytics in healthcare. This is especially important for complex models like random forests and decision trees.
+The analysis identified bmi (body mass index), bp(blood pressure), age, and cholesterol levels as the most predictive features across all models. For logistic regression, additional important features included alcohol consumption and general health status. The identification of key predictors such as bmi, bp, age, and cholesterol levels underscores the importance of targeted public health interventions. Policies aimed at reducing obesity and managing blood pressure through lifestyle changes, dietary regulations, and routine health check-ups could significantly mitigate the risk of type 2 diabetes.
+Public health campaigns focusing on regular cholesterol checks and promoting healthy lifestyle choices, such as reduced alcohol consumption and improved general health awareness, can enhance the effectiveness of diabetes prevention strategies. These targeted interventions can lead to more efficient allocation of resources and improved health outcomes in the population.
+The comparative analysis underscores the significance of model selection, feature engineering, and hyperparameter tuning in predictive modeling for health outcomes. The random forest model, with its superior balance of precision and recall, is recommended for predicting type 2 diabetes risk. Policymakers and healthcare providers should focus on implementing targeted interventions based on the most significant predictors identified, to effectively mitigate the risk of type 2 diabetes and improve public health outcomes.</p>
+<h1 id="references">References</h1>
+<p>Aghaei, S., Gómez, A., &amp; Vayanos, P. (2021). Strong Optimal Classification Trees. <a href="http://arxiv.org/abs/2103.15965">http://arxiv.org/abs/2103.15965</a>
+BOBBITT, Z. (2022, August 8). Label Encoding vs. One Hot Encoding: What’s the Difference? Statology.
+Breiman, L. (2001a). Random forests. Machine Learning, 45(1), 5–32. <a href="https://doi.org/10.1023/A:1010933404324/METRICS">https://doi.org/10.1023/A:1010933404324/METRICS</a>
+Breiman, L. (2001b). Random Forests. Machine Learning, 45(1), 5–32. <a href="https://doi.org/10.1023/A:1010933404324">https://doi.org/10.1023/A:1010933404324</a>
+Brownlee, J. (2020, August 28). How to Use StandardScaler and MinMaxScaler Transforms in Python. <a href="Https://Machinelearningmastery.Com/Standardscaler-and-Minmaxscaler-Transforms-in-Python/">Https://Machinelearningmastery.Com/Standardscaler-and-Minmaxscaler-Transforms-in-Python/</a>.
+Cichosz, S. L., Johansen, M. D., &amp; Hejlesen, O. (2016). Toward Big Data Analytics: Review of Predictive Models in Management of Diabetes and Its Complications. In Journal of Diabetes Science and Technology (Vol. 10, Issue 1, pp. 27–34). SAGE Publications Inc. <a href="https://doi.org/10.1177/1932296815611680">https://doi.org/10.1177/1932296815611680</a>
+Fawcett, T. (2006). An introduction to ROC analysis. Pattern Recognition Letters, 27(8), 861–874. <a href="https://doi.org/10.1016/J.PATREC.2005.10.010">https://doi.org/10.1016/J.PATREC.2005.10.010</a>
+Fullerton, A. S. (2009). A Conceptual Framework for Ordered Logistic Regression Models. <a href="Http://Dx.Doi.Org/10.1177/0049124109346162">Http://Dx.Doi.Org/10.1177/0049124109346162</a>, 38(2), 306–347. <a href="https://doi.org/10.1177/0049124109346162">https://doi.org/10.1177/0049124109346162</a>
+Géron, A. (2019). Hands-on Machine Learning with Scikit-Learn, Keras, and TensorFlow. Concepts, Tools, and Techniques to Build Intelligent Systems (N. Tache, Ed.; 2nd ed.). O’Reilly Media, Inc.
+Giuseppe, C., Ayyadevara, V. K., &amp; Perrier, A. (n.d.). Hands-On Machine Learning on Google Cloud Platform. <a href="https://www.oreilly.com/library/view/hands-on-machine-learning/9781788393485/fd5b8a44-e9d3-4c19-bebb-c2fa5a5ebfee.xhtml">https://www.oreilly.com/library/view/hands-on-machine-learning/9781788393485/fd5b8a44-e9d3-4c19-bebb-c2fa5a5ebfee.xhtml</a>. O’reilly.
+Gong, D. (2022). Top 6 Machine Learning Algorithms for Classification. Towards Data Science.
+Hohman, F., Wongsuphasawat, K., Kery, M. B., &amp; Patel, K. (2020). Understanding and Visualizing Data Iteration in Machine Learning. Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems, 1–13. <a href="https://doi.org/10.1145/3313831.3376177">https://doi.org/10.1145/3313831.3376177</a>
+Ilyas, A., Zampetakis, M., &amp; Daskalakis, C. (2020). A Theoretical and Practical Framework for Regression and Classification from Truncated Samples.
+Izenman, A. J. (2008). Modern Multivariate Statistical Techniques. <a href="https://doi.org/10.1007/978-0-387-78189-1">https://doi.org/10.1007/978-0-387-78189-1</a>
+Kuhn, M., &amp; Johnson, K. (2019). Feature Engineering and Selection. Chapman and Hall/CRC. <a href="https://doi.org/10.1201/9781315108230">https://doi.org/10.1201/9781315108230</a>
+McHugh, M. (2009). The odds ratio: calculation, usage, and interpretation. Biochemia Medica, 120–126. <a href="https://doi.org/10.11613/BM.2009.011">https://doi.org/10.11613/BM.2009.011</a>
+Min–max normalization - Hands-On Machine Learning on Google Cloud Platform [Book]. (n.d.). Retrieved July 3, 2024, from <a href="https://www.oreilly.com/library/view/hands-on-machine-learning/9781788393485/fd5b8a44-e9d3-4c19-bebb-c2fa5a5ebfee.xhtml">https://www.oreilly.com/library/view/hands-on-machine-learning/9781788393485/fd5b8a44-e9d3-4c19-bebb-c2fa5a5ebfee.xhtml</a>
+(PDF) Normalization and Standardization: Methods to preprocess data to have consistent scales and distributions. (n.d.). Retrieved July 3, 2024, from <a href="https://www.researchgate.net/publication/377123133_Normalization_and_Standardization_Methods_to_preprocess_data_to_have_consistent_scales_and_distributions">https://www.researchgate.net/publication/377123133_Normalization_and_Standardization_Methods_to_preprocess_data_to_have_consistent_scales_and_distributions</a>
+Powers, D. M. W. (2007). Evaluation: From Precision, Recall and F-Factor  to ROC, Informedness, Markedness &amp; Correlation .
+Provost, F., Org, P., &amp; Fawcett, T. (2001). Robust Classification for Imprecise Environments. 42, 203–231.
+Rani, K. J. (2020). Diabetes Prediction Using Machine Learning. International Journal of Scientific Research in Computer Science, Engineering and Information Technology, 294–305. <a href="https://doi.org/10.32628/CSEIT206463">https://doi.org/10.32628/CSEIT206463</a>
+Raschka, S., &amp; Mirjalili, V. (2019). Python Machine Learning Machine Learning and Deep Learning with Python, Scikit-learn, and TensorFlow 2. Packt Publishing.
+Roy, B. (2019). All about Categorical Variable Encoding. Medium.
+Sharma, R. (2022, November 8). What’s Wrong with Your Statistical Model? Skewed Data. <a href="Https://Builtin.Com/Data-Science/Skewed-Data">Https://Builtin.Com/Data-Science/Skewed-Data</a>.
+Sohil, F., Sohali, M. U., &amp; Shabbir, J. (2022). An introduction to statistical learning with applications in R. Statistical Theory and Related Fields, 6(1), 87–87. <a href="https://doi.org/10.1080/24754269.2021.1980261">https://doi.org/10.1080/24754269.2021.1980261</a>
+Sokolova, M., &amp; Lapalme, G. (2009). A systematic analysis of performance measures for classification tasks. Information Processing &amp; Management, 45(4), 427–437. <a href="https://doi.org/10.1016/J.IPM.2009.03.002">https://doi.org/10.1016/J.IPM.2009.03.002</a>
+Train, K. E. (2001). Discrete Choice Methods with Simulation. Cambridge University Press. <a href="https://doi.org/10.1017/CBO9780511805271">https://doi.org/10.1017/CBO9780511805271</a></p>
+
+            
+            
+        </body>
+        </html>
